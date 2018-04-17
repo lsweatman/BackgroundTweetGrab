@@ -1,0 +1,17 @@
+{
+  "name": "backgroundprocess",
+  "version": "1.0.0",
+  "description": "Reads a new tweet and makes associations",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Luke Sweatman",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^5.0.1",
+    "node-stanford-postagger": "0.0.1",
+    "oracledb": "^2.2.0",
+    "twitter": "^1.7.1"
+  }
+}
