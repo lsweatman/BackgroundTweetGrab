@@ -1,11 +1,13 @@
 var request = require("request");
 var oracledb = require('oracledb');
+var Tagger = require('node-stanford-postagger/postagger').Tagger;
 require('dotenv').config();
 
 var twitter_api = 'https://api.twitter.com/1.1/statuses/user_timeline.json';
 var bearer_token = process.env.BEARER_TOKEN; // the token you got in the last step
 var lastTweetID;
 
+// Options for the twitter post request
 var options = {
     method: 'GET',
     url: twitter_api,
@@ -19,6 +21,12 @@ var options = {
         "Authorization": "Bearer " + bearer_token
     }
 };
+
+// Create new tagger object
+var tagger = new Tagger({
+    port: "9000",
+    host: process.env.DIGITAL_OCEAN_IP
+});
 
 oracledb.getConnection(
     {
@@ -45,11 +53,19 @@ oracledb.getConnection(
 setInterval(sendRequest, 60000);
 
 function sendRequest() {
-    request(options, function(error, response, body) {
-        console.dir(body[0].text);
+    request(options, function(error, response, body) {  
         if(body[0].id != lastTweetID){
+            console.dir(body[0]);
             lastTweetID = body[0].id;
+            tagger.tag(body[0].text, function(err, resp) {
+                if (err) return console.error(err);
+                    console.log(resp);
+            });
             // TODO: insert things into the database
+        }
+        else
+        {
+            console.log("Redundancy hit");
         }
     });
 }
