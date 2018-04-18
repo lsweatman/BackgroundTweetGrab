@@ -12,6 +12,6 @@
     "dotenv": "^5.0.1",
     "node-stanford-postagger": "0.0.1",
     "oracledb": "^2.2.0",
-    "twitter": "^1.7.1"
+    "request": "^2.85.0"
   }
 }
