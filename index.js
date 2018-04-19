@@ -1,4 +1,5 @@
 var request = require("request");
+var emojiStrip = require('emoji-strip')
 var oracledb = require('oracledb');
 var Tagger = require('node-stanford-postagger/postagger').Tagger;
 require('dotenv').config();
